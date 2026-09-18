@@ -1,0 +1,1 @@
+abaqus的python脚本项目建模示例，把所有文件复制到刚打开的abaqus默认工作目录下，打开abaqus pde，运行iw3p_parameter1.py。需要安装abaqus2024以上版本以支持python3.0+。
