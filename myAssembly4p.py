@@ -137,3 +137,7 @@ class _Set:
         width1 = column.width1
         supportPoint = a.ReferencePoint(point=(0.5 * width1, offset_y, offset_z))
         a.Set(referencePoints=(r[supportPoint.id], ), name=self.support_point_name)
+
+def regenerate_assembly(assembly:MyAssembly):
+    a = mdb.models[assembly.model_name].rootAssembly
+    a.regenerate()

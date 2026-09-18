@@ -5,7 +5,7 @@ from myAssembly3p import MyAssembly
 from myStep import MyStep
 
 class MyBoundary:
-    def __init__(self, myAssembly:MyAssembly, myStep:MyStep, displacement,
+    def __init__(self, myAssembly:MyAssembly, myStep:MyStep, displacement=-70,
                  symmetry_boundary_name='BC-symmetry', load_boundary_name='BC-load', support_boundary_name='BC-support'):
         self.symmetry_boundary_name = symmetry_boundary_name
         self.load_boundary_name = load_boundary_name
@@ -17,11 +17,7 @@ class MyBoundary:
         a = mdb.models[myAssembly.model_name].rootAssembly
 
         region = a.sets[myAssembly.sets.symmetry_plane_name]
-        #mdb.models[myAssembly.model_name].ZsymmBC(name=self.symmetry_boundary_name, createStepName='Initial', region=region, localCsys=None)
-        mdb.models[myAssembly.model_name].DisplacementBC(
-            name=self.symmetry_boundary_name, createStepName='Initial', region=region,
-            u1=SET, u2=UNSET, u3=SET, ur1=SET, ur2=SET, ur3=SET,
-            amplitude=UNSET, distributionType=UNIFORM, fieldName='', localCsys=None)
+        mdb.models[myAssembly.model_name].ZsymmBC(name=self.symmetry_boundary_name, createStepName='Initial', region=region, localCsys=None)
 
         region = a.sets[myAssembly.sets.load_point_name]
         mdb.models[myAssembly.model_name].DisplacementBC(

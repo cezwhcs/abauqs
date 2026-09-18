@@ -9,7 +9,7 @@ class StepType(Enum):
 
 class MyStep:
     def __init__(self, myAssembly:MyAssembly, step_type=StepType.STATIC_STEP, step_name='step-1', previous_step_name='Initial', maxNumInc=int(10000),
-                 initInc=0.01, minInc=1e-15, maxInc=0.02, output_increment=0.02, timeMarks=OFF, totalArcLength=1):
+                 initInc=0.005, minInc=1e-15, maxInc=0.02, output_increment=0.01, timeMarks=OFF, totalArcLength=1):
         self.step_type = step_type
         self.previous_step_name = previous_step_name
         self.step_name = step_name

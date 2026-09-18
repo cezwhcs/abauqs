@@ -1,6 +1,7 @@
 from abaqus import *
 from abaqusConstants import *
 from caeModules import *
+
 from concrete import Concrete
 from column3p import Column
 from itube import Itube
@@ -8,9 +9,9 @@ from partitionConcrete import PartitionConcrete
 
 class MeshConcrete:
     def __init__(self, itube:Itube, column:Column,  concrete:Concrete, partitionConcrete:PartitionConcrete,
-                 global_size=6, innner_size=13,
-                 radius1_outside_elements=1, radius1_inside_elements=3, radius2_elements=2,
-                 shearkey_elements=4, edge1_elements = 3):
+                 global_size=5, innner_size=10,
+                 radius1_outside_elements=2, radius1_inside_elements=5, radius2_elements=3,
+                 shearkey_elements=6, edge1_elements = 3, grout_layer_elements=0):
         self.outter_size = global_size
         self.innner_size = innner_size
         self.radius1_outside_elements = radius1_outside_elements
@@ -18,6 +19,7 @@ class MeshConcrete:
         self.radius2_elements = radius2_elements
         self.shearkey_elements = int(shearkey_elements * 0.5)
         self.edge1_elements = edge1_elements
+        self.grout_layer_elements = grout_layer_elements
         self.more_partition = partitionConcrete.more_partition
         self.__setElementType(itube, column, concrete)
         self.__setSeed(itube, column, concrete)
@@ -36,30 +38,6 @@ class MeshConcrete:
         if self.more_partition:
             pickedRegions = p.sets[concrete.sets.outer_concrete].cells
             p.setMeshControls(regions=pickedRegions, technique=SWEEP, algorithm=MEDIAL_AXIS)
-
-        pickedRegions = p.cells.getByBoundingBox(
-            xMin=0, xMax=offset_x,
-            yMin=itube.radius1 + offset_y, yMax=itube.height1 - itube.radius1 + offset_y,
-            zMin=0, zMax=concrete.length)
-        p.setMeshControls(regions=pickedRegions, technique=STRUCTURED)
-
-        pickedRegions = p.cells.getByBoundingBox(
-            xMin=itube.radius1 + offset_x, xMax=itube.width1 - itube.radius1 + offset_x,
-            yMin=0, yMax=offset_y,
-            zMin=0, zMax=concrete.length)
-        p.setMeshControls(regions=pickedRegions, technique=STRUCTURED)
-
-        pickedRegions = p.cells.getByBoundingBox(
-            xMin=itube.radius1 + offset_x, xMax=width1 - width2,
-            yMin=height1 - height2 + column.radius1, yMax=height1,
-            zMin=0, zMax=concrete.length)
-        p.setMeshControls(regions=pickedRegions, technique=STRUCTURED)
-
-        pickedRegions = p.cells.getByBoundingBox(
-            xMin=width1 - width2 + column.radius1, xMax=width1,
-            yMin=itube.radius1 + offset_y, yMax=height1 - height2,
-            zMin=0, zMax=concrete.length)
-        p.setMeshControls(regions=pickedRegions, technique=STRUCTURED)
 
         #inner corner
         pickedRegions = p.cells.getByBoundingBox(
@@ -275,6 +253,14 @@ class MeshConcrete:
                       ((x2 - delta, y2, concrete.length),),]
             pickedEdges = p.edges.findAt(*points)
             p.seedEdgeByNumber(edges=pickedEdges, number=self.edge1_elements, constraint=FINER)
+
+        if self.grout_layer_elements:
+            delta = 0.1
+            offset_y = (column.height1 - 2* column.thickness - itube.height1) * 0.5
+            points_on_t = []
+            points_on_t.append(((delta, offset_y + itube.radius1, concrete.length),))
+            pickedEdges = p.edges.findAt(*points_on_t)
+            p.seedEdgeByNumber(edges=pickedEdges, number=self.grout_layer_elements, constraint=FINER)
 
     def __generateMesh(self, itube:Itube, column:Column, concrete:Concrete):
         p = mdb.models[concrete.model_name].parts[concrete.part_name]

@@ -4,7 +4,7 @@ from caeModules import *
 from column3p import Column
 
 class PartitionColumn:
-    def __init__(self, column: Column, global_size, mesh_dense_extend_length=100, shearkey_partition=False):
+    def __init__(self, column: Column, global_size=14, mesh_dense_extend_length=100, shearkey_partition=False):
         self.global_size = global_size
         self.mesh_dense_extend_length = mesh_dense_extend_length
         self.shearkey_partition = shearkey_partition
@@ -79,7 +79,6 @@ class PartitionColumn:
         d = p.datums
 
         # 1
-
         for i in range(len(datumy_index)):
             if i == 0 or i == 3 or i == 4:
                 pickedCells = p.cells

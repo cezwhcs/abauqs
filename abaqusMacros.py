@@ -16,7 +16,7 @@ def Macro1():
     import xyPlot
     import displayGroupOdbToolset as dgo
     import connectorBehavior
-    a = mdb.models['Model-1'].rootAssembly
-    a.regenerate()
+    mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].move('step-1', 
+        'Step-0')
 
 

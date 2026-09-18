@@ -4,7 +4,7 @@ from caeModules import *
 from tube import Tube
 
 class Column(Tube):
-    def __init__(self, shearkey_nums, shearkey_h=4, shearkey_w=8, shearkey_s=40, shearkey_p=20,
+    def __init__(self, shearkey_nums, shearkey_h=4, shearkey_w=9, shearkey_s=40, shearkey_p=20,
                  pad_thickness=20, pad_pos=50, pad_hole_radius=30, pad_hole_pos=[0.42, 0.42],
                  model_name='Model-1', part_name='column',
                  height1=150, width1=150, height2=50, width2=50, radius1=25, thickness=8, length=800,

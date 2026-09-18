@@ -22,4 +22,7 @@ def get_LoadPoint_U2_RF2(odb_name, point_name):
     dispFile.close()
     #odb.close()
 
-get_LoadPoint_U2_RF2(odb_name=session.viewports['Viewport: 1'].odbDisplay.name, point_name='POINT-LOAD')
+for i in {2, 3, 5}:
+    get_LoadPoint_U2_RF2(odb_name=f"{i}w3p-mander4.odb", point_name='POINT-LOAD')
+    get_LoadPoint_U2_RF2(odb_name=f"{i}w4p-mander4.odb", point_name='POINT-LOAD')
+#get_LoadPoint_U2_RF2(odb_name=session.viewports['Viewport: 1'].odbDisplay.name, point_name='POINT-LOAD')

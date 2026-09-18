@@ -4,7 +4,7 @@ from caeModules import *
 from column4p import Column
 
 class PartitionColumn:
-    def __init__(self, column: Column, global_size, mesh_dense_extend_length=100, shearkey_partition=True):
+    def __init__(self, column: Column, global_size=14, mesh_dense_extend_length=100, shearkey_partition=True):
         self.global_size = global_size
         self.mesh_dense_extend_length = mesh_dense_extend_length
         self.shearkey_partition = shearkey_partition

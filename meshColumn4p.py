@@ -5,10 +5,10 @@ from column4p import Column
 from partitionColumn4p import PartitionColumn
 
 class MeshColumn:
-    def __init__(self, column: Column, partitionColumn:PartitionColumn, tube_t_elements=2, shearkey_arc_elements=6, pad_t_elements=2,
-                 column_3corners_elements=2, column_1corner_elements=4, pad2_thickness_elements=2, pad3_thickness_elements=2,
-                 hollow_length_size=25, grouted_length_size=15,
-                 shearkey_WEDGE=True, pad_corner_WEDGE=False, pad_hole_WEDGE=True,
+    def __init__(self, column: Column, partitionColumn:PartitionColumn, tube_t_elements=3, shearkey_arc_elements=6, pad_t_elements=2,
+                 column_3corners_elements=3, column_1corner_elements=3, pad2_thickness_elements=2, pad3_thickness_elements=2,
+                 hollow_length_size=25, grouted_length_size=0,
+                 shearkey_WEDGE=True, pad_corner_WEDGE=True, pad_hole_WEDGE=True,
                  pad2_3corners_WEDGE=True, pad2_1corner_WEDGE=True):
         self.global_size = partitionColumn.global_size
         self.tube_t_elements = tube_t_elements

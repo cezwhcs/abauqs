@@ -4,10 +4,29 @@ from caeModules import *
 from column3p import Column
 from partitionColumn3p import PartitionColumn
 
+def _getEdgesParalleToZ(z0, z1, column:Column):
+    p = mdb.models[column.model_name].parts[column.part_name]
+    pickedEdges = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
+                                           yMin=0, yMax=column.height1,
+                                           zMin=z0, zMax=z1)
+    deltaZ = 0.1
+    pickedEdgesZ0 = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
+                                             yMin=0, yMax=column.height1,
+                                             zMin=z0 - deltaZ, zMax=z0 + deltaZ)
+    pickedEdgesZ1 = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
+                                             yMin=0, yMax=column.height1,
+                                             zMin=z1 - deltaZ, zMax=z1 + deltaZ)
+    set_all = {edge.index for edge in pickedEdges}
+    set_0 = {edge.index for edge in pickedEdgesZ0}
+    set_1 = {edge.index for edge in pickedEdgesZ1}
+    set_need = set_all - set_0 - set_1
+    e = p.edges
+    return part.EdgeArray([e[i] for i in set_need])
+
 class MeshColumn:
-    def __init__(self, column: Column, partitionColumn:PartitionColumn,tube_t_elements=2, shearkey_arc_elements=6, pad_t_elements=1,
-                 column_3corners_elements=2, column_1corner_elements=4, hollow_length_size=25, grouted_length_size=15,
-                 shearkey_WEDGE=True, corner_WEDGE=False, pad_hole_WEDGE=True):
+    def __init__(self, column: Column, partitionColumn:PartitionColumn,tube_t_elements=3, shearkey_arc_elements=6, pad_t_elements=2,
+                 column_3corners_elements=3, column_1corner_elements=3, hollow_length_size=25, grouted_length_size=0,
+                 shearkey_WEDGE=True, corner_WEDGE=True, pad_hole_WEDGE=True):
         self.global_size = partitionColumn.global_size
         self.tube_t_elements = tube_t_elements
         self.shearkey_arc_elements = shearkey_arc_elements
@@ -161,24 +180,3 @@ class MeshColumn:
     def __generateMesh(self, column: Column):
         p = mdb.models[column.model_name].parts[column.part_name]
         p.generateMesh()
-
-
-
-def _getEdgesParalleToZ(z0, z1, column:Column):
-    p = mdb.models[column.model_name].parts[column.part_name]
-    pickedEdges = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
-                                           yMin=0, yMax=column.height1,
-                                           zMin=z0, zMax=z1)
-    deltaZ = 0.1
-    pickedEdgesZ0 = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
-                                             yMin=0, yMax=column.height1,
-                                             zMin=z0 - deltaZ, zMax=z0 + deltaZ)
-    pickedEdgesZ1 = p.edges.getByBoundingBox(xMin=0, xMax=column.width1,
-                                             yMin=0, yMax=column.height1,
-                                             zMin=z1 - deltaZ, zMax=z1 + deltaZ)
-    set_all = {edge.index for edge in pickedEdges}
-    set_0 = {edge.index for edge in pickedEdgesZ0}
-    set_1 = {edge.index for edge in pickedEdgesZ1}
-    set_need = set_all - set_0 - set_1
-    e = p.edges
-    return part.EdgeArray([e[i] for i in set_need])

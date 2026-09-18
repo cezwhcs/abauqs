@@ -5,10 +5,10 @@ from itube import Itube
 from partitionItube import PartitionItube
 
 class MeshItube:
-    def __init__(self, itube:Itube, partitionItube:PartitionItube, global_size,
-                 tube_t_elements=2, arc_elements=4, pad_t_elements=2,
-                 corner3_elements=4, corner1_elements=2,
-                 shearkey_WEDGE = False, corner_WEDGE= True):
+    def __init__(self, itube:Itube, partitionItube:PartitionItube, global_size=12,
+                 tube_t_elements=3, arc_elements=6, pad_t_elements=2,
+                 corner3_elements=4, corner1_elements=3,
+                 shearkey_WEDGE = True, corner_WEDGE= True):
         self.global_size = global_size
         self.tube_t_elements = tube_t_elements
         self.arc_elements = arc_elements

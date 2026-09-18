@@ -57,7 +57,7 @@ def _Sketch2(model_name, sketch_name, pad_width, pad_height, height1, width1, he
 
 class Itube(Tube):
 
-    def __init__(self, length, shearkey_nums, shearkey_h=4, shearkey_w=8, shearkey_s=40, shearkey_p=40,
+    def __init__(self, length, shearkey_nums, shearkey_h=4, shearkey_w=9, shearkey_s=40, shearkey_p=40,
                  pad_thickness=10, pad_width=154, pad_height=154,
                  model_name='Model-1', part_name='itube',
                  height1=100, width1=100, height2=50, width2=50, radius1=20, thickness=10,

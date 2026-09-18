@@ -4,7 +4,7 @@ from caeModules import *
 from myAssembly4p import MyAssembly
 
 class MyInteraction:
-    def __init__(self, myAssembly:MyAssembly, friction_ratio=0.35, friction2_ratio=0.15, createStepName='Initial',
+    def __init__(self, myAssembly:MyAssembly, friction_ratio=0.4, friction2_ratio=0.15, createStepName='Initial',
                  interactionProperties_name='IntProp-1', interaction_name='Int-1',
                  interactionProperties2_name='IntProp-2', interaction2_name='Int-2',
                  load_constraint_name='constrain-load', support_constraint_name='constraint-support'):
